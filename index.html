@@ -119,9 +119,19 @@
            
 
             const obj = localStorage.getItem("users");
+           
+            if(obj === null){
+               let array = [];
+               let obj = new User("null","null","null","null");
+               array.push(obj);
+                
+                
+                
+               localStorage.setItem();
+            }
 
 
-            console.log("Los usarios que hay soy", obj);
+            console.log("Los usarios que hay", obj);
             
 
             let users = JSON.parse(obj);
