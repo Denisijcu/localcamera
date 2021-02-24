@@ -1,0 +1,63 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Arial;
+  }
+
+  h1{
+      text-align: center;
+  }
+
+
+ .form-login{
+    margin: 10px;
+    padding: 5px;
+
+ }
+
+  button{
+      padding: 15px;
+      color: white;
+  }
+
+  .btn-black{
+    background-color: black;
+    position:relative;
+    left: 25px;
+  }
+
+  .btn-blue{
+    background-color: blue;
+    position:relative;
+    left: 25px;
+  }
+  
+
+
+  button:hover{
+      font-weight: bold;
+  }
+  .btn-blue:hover{
+      background-color:white;
+      color: blue;
+  }
+  .btn-black:hover{
+    background-color:white;
+    color: black;
+}
+
+.btn-float{
+    margin-left: 90%;
+    margin-top: 0%;
+    background-color:red;
+    color: white;
+    font-weight: bold;
+    font-size: 32px;
+    border-radius: 50%;
+    border-color: transparent;
+    cursor: pointer;
+    transition-delay: 3ms;
+}

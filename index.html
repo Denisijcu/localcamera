@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Como usar la camara</title>
+
+    <link rel="stylesheet" href="./style.css">
+
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
+
+</head>
+
+<body>
+
+   <div class="container">
+
+      <h1>Local Camera</h1>
+
+      
+          <div class="form-login">
+        <label for="user">Login</label>
+
+        <input type="email" placeholder="Enter email" onchange="fnLogin(email.value)"id="email" name="email"> 
+    
+        <div class="register">
+            <label for="noRegister">Email no registered yet. Do you want to register ?</label>
+            <button class="btn-blue" onClick="fnRegister(email.value)">Yes</button>
+            <button class="btn-black" onclick="fnClose()">No</button>
+        </div>
+
+         </div>
+
+      
+    
+
+
+    <div class="isRegister">
+    
+        <button id="btn-show" class="btn-blue">Show Camera</button>
+        <button id="btn-hide" class="btn-black">Hide Camera</button>
+    
+        <br>
+    
+        <div class="show-cam">
+            <video id="webcam" autoplay playsinline height="500" width="900"></video>
+            <canvas id="canvas" class="d-none"></canvas>
+            <audio id="snapSound" src="audio/snap.wav" preload="auto"></audio>
+        </div>
+        <br>
+    
+
+    </div>
+
+ 
+    </div>
+
+    <script>
+
+    
+       let users = [];
+       class User {
+            constructor(name, lname, email, phone) {
+                this.name = name;
+                this.lname = lname;
+                this.email = email;
+                this.phone = phone;
+            }
+        }     
+
+
+       const formLogin = document.querySelector(".form-login");
+
+
+       const isRegister = document.querySelector(".isRegister");
+       isRegister.style.visibility = "hidden";
+       const register = document.querySelector(".register");
+       register.style.visibility = "hidden";
+       const show = document.querySelector("#btn-show");
+       show.style.visibility="hidden";
+       const hide = document.querySelector("#btn-hide");
+       hide.style.visibility="hidden";
+
+
+
+       function fnClose(){
+           register.style.visibility = "hidden";
+       }
+       function fnRegister(email){
+         user = new User();
+
+
+         const obj = localStorage.getItem("users");
+        
+         users.push(JSON.parse(obj));
+
+         user.email = email;
+         users.push(user);
+
+
+        
+
+         localStorage.setItem("users",JSON.stringify(users));
+
+         register.style.display = "none";
+
+         isRegister.style.visibility = "visible";
+
+         formLogin.style.visibility = 'hidden';
+
+         show.style.visibility = "visible";
+
+
+       }
+
+       function fnLogin(email){
+           
+
+            const obj = localStorage.getItem("users");
+
+
+            console.log("Los usarios que hay soy", obj);
+            
+
+            let users = JSON.parse(obj);
+
+    
+
+            const user = users.filter(u => u.email === email);
+
+          
+        
+            if(user.length===0){
+                register.style.visibility = "visible";
+                show.style.visibility="hidden";
+            }else if(user[0].email == email) {
+               
+                isRegister.style.visibility = "visible";
+                show.style.visibility="visible";
+                formLogin.style.visibility = 'hidden';
+            }else{
+                console.log(`No son iguales ${user.email} y ${email}`);
+            }
+        }
+
+      
+
+        const btnShowCamera = document.querySelector("#btn-show");
+        const btnHideCamera = document.querySelector("#btn-hide");
+
+
+        const webcamElement = document.getElementById('webcam');
+        const canvasElement = document.getElementById('canvas');
+        const snapSoundElement = document.getElementById('snapSound');
+        const webcam = new Webcam(webcamElement, 'user', canvasElement, snapSoundElement);
+        const showCam = document.querySelector(".show-cam");
+
+
+        btnShowCamera.addEventListener("click", () => {
+
+            showCam.style.visibility = "visible";
+            showCam.style.marginLeft = "26%";
+
+            webcam.start()
+                .then(result => {
+
+                    hide.style.visibility="visible";
+                    show.style.visibility="hidden";
+
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+
+        }, true);
+
+
+        btnHideCamera.addEventListener("click", () => {
+            
+            
+            showCam.style.visibility = "hidden";
+            show.style.visibility = "visible";
+            hide.style.visibility="hidden";
+
+        }, true);
+
+       
+    </script>
+</body>
+
+</html>
